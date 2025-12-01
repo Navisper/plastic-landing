@@ -1,0 +1,4 @@
+# Crear archivo .dockerignore
+echo node_modules > .dockerignore
+echo .git >> .dockerignore
+echo dist >> .dockerignore
