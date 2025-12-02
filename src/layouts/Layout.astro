@@ -1,22 +1,77 @@
+---
+import "../styles/global.css";
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="es" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- SEO Meta Tags -->
+		<title>Plastic App - Conectando recicladores con ofertantes</title>
+		<meta
+			name="description"
+			content="Plastic es la plataforma que muestra puntos de reciclaje cercanos, cantidades disponibles y sugiere rutas eficientes para reciclar. Menos gasolina, menos tiempo, más toneladas procesadas."
+		/>
+
+		<!-- Open Graph -->
+		<meta
+			property="og:title"
+			content="Plastic App - Reciclaje inteligente"
+		/>
+		<meta
+			property="og:description"
+			content="Conectamos recicladores con personas que tienen materiales reciclables. Rutas optimizadas, menos tiempo, más eficiencia."
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="/og-image.jpg" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Plastic App" />
+		<meta
+			name="twitter:description"
+			content="La app que optimiza el reciclaje en tu ciudad"
+		/>
+
+		<!-- Canonical -->
+		<link rel="canonical" href="https://plasticapp.com" />
+
+		<!-- Structured Data -->
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Organization",
+				"name": "Plastic App",
+				"description": "Plataforma digital para conectar recicladores con ofertantes de materiales reciclables",
+				"url": "https://plasticapp.com",
+				"logo": "https://plasticapp.com/logo.png"
+			}
+		</script>
+
+		<!-- Favicon -->
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+		<slot name="head" />
 	</head>
-	<body>
+	<body
+		class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300"
+	>
 		<slot />
+
+		<!-- Scripts -->
+		<script>
+			// Theme toggle
+			if (
+				localStorage.theme === "dark" ||
+				(!("theme" in localStorage) &&
+					window.matchMedia("(prefers-color-scheme: dark)").matches)
+			) {
+				document.documentElement.classList.add("dark");
+			} else {
+				document.documentElement.classList.remove("dark");
+			}
+		</script>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
