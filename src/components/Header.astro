@@ -3,11 +3,12 @@
 ---
 
 <header
-    class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800"
+    class="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800"
 >
     <div class="container mx-auto px-4 py-4">
         <nav class="flex justify-between items-center">
-            <div class="flex items-center space-x-2">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2">
                 <div
                     class="w-10 h-10 bg-gradient-to-br from-primary-500 to-emerald-600 rounded-lg flex items-center justify-center"
                 >
@@ -18,34 +19,253 @@
                 >
                     Plasticket
                 </span>
-            </div>
+            </a>
 
-            <div class="flex items-center space-x-6">
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-6">
                 <a
                     href="#beneficios"
-                    class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                    class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors px-3 py-2"
                 >
                     Beneficios
                 </a>
                 <a
-                    href="#como-funciona"
-                    class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                    href="#funcionamiento"
+                    class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors px-3 py-2"
                 >
                     ¿Cómo funciona?
                 </a>
                 <a
-                    href="#precios"
-                    class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                    href="#video-demo"
+                    class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors px-3 py-2"
                 >
-                    Precios
+                    Demo
                 </a>
+                
                 <a
                     href="#quiero-participar"
-                    class="bg-gradient-to-r from-primary-500 to-emerald-600 text-white px-6 py-2 rounded-full hover:shadow-lg hover:shadow-primary-500/25 transition-all duration-300"
+                    class="bg-gradient-to-r from-primary-500 to-emerald-600 text-white px-6 py-2 rounded-full hover:shadow-lg hover:shadow-primary-500/25 transition-all duration-300 ml-4"
                 >
                     Quiero participar
                 </a>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+                id="mobileMenuButton"
+                class="md:hidden text-gray-700 dark:text-gray-300 p-2"
+            >
+                <svg
+                    id="menuIcon"
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
         </nav>
+
+        <!-- Mobile Navigation -->
+        <div
+            id="mobileMenu"
+            class="hidden md:hidden mt-4 space-y-2 pb-4 border-t border-gray-200 dark:border-gray-800 pt-4"
+        >
+            <a
+                href="#beneficios"
+                class="block py-3 hover:text-primary-600 dark:hover:text-primary-400 transition-colors px-2"
+            >
+                Beneficios
+            </a>
+            <a
+                href="#funcionamiento"
+                class="block py-3 hover:text-primary-600 dark:hover:text-primary-400 transition-colors px-2"
+            >
+                ¿Cómo funciona?
+            </a>
+            <a
+                href="#video-demo"
+                class="block py-3 hover:text-primary-600 dark:hover:text-primary-400 transition-colors px-2"
+            >
+                Demo
+            </a>
+            
+            <a
+                href="#quiero-participar"
+                class="block w-full text-center bg-gradient-to-r from-primary-500 to-emerald-600 text-white px-6 py-3 rounded-full hover:shadow-lg hover:shadow-primary-500/25 transition-all duration-300 mt-4"
+            >
+                Quiero participar
+            </a>
+        </div>
     </div>
 </header>
+
+<script>
+    // Mobile menu toggle con JavaScript vanilla
+    document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.getElementById("mobileMenuButton");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const menuIcon = document.getElementById("menuIcon");
+
+        if (mobileMenuButton && mobileMenu && menuIcon) {
+            mobileMenuButton.addEventListener("click", function () {
+                // Toggle menu visibility
+                const isHidden = mobileMenu.classList.contains("hidden");
+
+                if (isHidden) {
+                    mobileMenu.classList.remove("hidden");
+                    // Change to close icon
+                    if (menuIcon) {
+                        menuIcon.innerHTML =
+                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+                    }
+                } else {
+                    mobileMenu.classList.add("hidden");
+                    // Change to menu icon
+                    if (menuIcon) {
+                        menuIcon.innerHTML =
+                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                    }
+                }
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener("click", function (event) {
+                const target = event.target as Node | null;
+                const isClickInsideMenu = target ? mobileMenu.contains(target) : false;
+                const isClickOnButton = target ? mobileMenuButton.contains(target) : false;
+
+                if (
+                    !isClickInsideMenu &&
+                    !isClickOnButton &&
+                    !mobileMenu.classList.contains("hidden")
+                ) {
+                    mobileMenu.classList.add("hidden");
+                    if (menuIcon) {
+                        menuIcon.innerHTML =
+                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                    }
+                }
+            });
+
+            // Close menu when clicking a link (for smooth anchor links)
+            const mobileLinks = mobileMenu.querySelectorAll("a");
+            mobileLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    mobileMenu.classList.add("hidden");
+                    if (menuIcon) {
+                        menuIcon.innerHTML =
+                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                    }
+                });
+            });
+
+            // Handle smooth scrolling for anchor links
+            document
+                .querySelectorAll('a[href^="#"]')
+                .forEach(function (anchor) {
+                    anchor.addEventListener("click", function (e) {
+                        const href = (anchor as HTMLAnchorElement).getAttribute("href");
+                        // Skip if it's just "#"
+                        if (href === "#" || href === null) return;
+
+                        e.preventDefault();
+
+                        const targetElement = document.querySelector(href) as HTMLElement | null;
+                        if (targetElement) {
+                            // Calculate header height for offset
+                            const header = document.querySelector("header") as HTMLElement | null;
+                            const headerHeight = header ? header.offsetHeight : 0;
+                            const targetPosition =
+                                targetElement.offsetTop - headerHeight - 20;
+
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: "smooth",
+                            });
+
+                            // Update URL without jumping
+                            history.pushState("", "", href);
+                        }
+                    });
+                });
+        }
+
+        // Handle scroll to update active link (opcional, mejora UX)
+        let sections = Array.from(document.querySelectorAll("section[id]")) as HTMLElement[];
+        let navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+        window.addEventListener("scroll", function () {
+            let current = "";
+            const header = document.querySelector("header") as HTMLElement | null;
+            let headerHeight = header ? header.offsetHeight : 0;
+
+            sections.forEach(function (section) {
+                const sectionTop = section.offsetTop - headerHeight - 100;
+                if (window.scrollY >= sectionTop) {
+                    const id = section.getAttribute("id");
+                    if (id) {
+                        current = id;
+                    }
+                }
+            });
+
+            navLinks.forEach(function (link) {
+                link.classList.remove(
+                    "text-primary-600",
+                    "dark:text-primary-400",
+                    "font-semibold",
+                );
+                if (link.getAttribute("href") === "#" + current) {
+                    link.classList.add(
+                        "text-primary-600",
+                        "dark:text-primary-400",
+                        "font-semibold",
+                    );
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    /* Mejoras de transición para el menú móvil */
+    #mobileMenu {
+        transition: all 0.3s ease-in-out;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    #mobileMenu:not(.hidden) {
+        max-height: 500px;
+    }
+
+    /* Mejoras para dispositivos móviles */
+    @media (max-width: 768px) {
+        nav a {
+            font-size: 1rem;
+        }
+
+        /* Asegurar que los enlaces sean táctiles */
+        #mobileMenu a {
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    /* Mejora para el botón del menú */
+    #mobileMenuButton {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

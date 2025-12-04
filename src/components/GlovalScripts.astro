@@ -1,0 +1,108 @@
+---
+
+---
+
+<script>
+    // Suavizar el scroll para todos los enlaces de anclaje
+    document.addEventListener("DOMContentLoaded", function () {
+        // Función para scroll suave
+        function smoothScrollTo(targetId: string) {
+            const targetElement = document.querySelector(targetId);
+            if (!targetElement) return;
+
+            const header = document.querySelector("header");
+            const headerHeight = header ? header.offsetHeight : 0;
+            const targetPosition = (targetElement as HTMLElement).offsetTop - headerHeight - 20;
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: "smooth",
+            });
+        }
+
+        // Manejar clicks en enlaces internos
+        document.addEventListener("click", function (e) {
+            let link: Element | null = null;
+            if (e.target instanceof Element) {
+                link = e.target.closest('a[href^="#"]');
+            }
+            if (link && link.getAttribute("href") !== "#") {
+                e.preventDefault();
+                const targetId = link.getAttribute("href");
+                if (targetId) {
+                    smoothScrollTo(targetId);
+
+                    // Actualizar URL
+                    history.pushState(null, "", targetId);
+                }
+            }
+        });
+
+        // Cerrar menú móvil al redimensionar a desktop
+        window.addEventListener("resize", function () {
+            const mobileMenu = document.getElementById("mobileMenu");
+            const menuIcon = document.getElementById("menuIcon");
+
+            if (
+                window.innerWidth >= 768 &&
+                mobileMenu &&
+                !mobileMenu.classList.contains("hidden")
+            ) {
+                mobileMenu.classList.add("hidden");
+                if (menuIcon) {
+                    menuIcon.innerHTML =
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+                }
+            }
+        });
+
+        // Detectar tema del sistema
+        function detectSystemTheme() {
+            if (
+                window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches
+            ) {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        }
+
+        // Escuchar cambios de tema del sistema
+        if (window.matchMedia) {
+            window
+                .matchMedia("(prefers-color-scheme: dark)")
+                .addEventListener("change", detectSystemTheme);
+        }
+
+        // Inicializar detección de tema
+        detectSystemTheme();
+    });
+</script>
+
+<!-- Estilos adicionales para mejor UX -->
+<style>
+    /* Mejorar accesibilidad de focos */
+    a:focus,
+    button:focus {
+        outline: 2px solid rgba(34, 197, 94, 0.5);
+        outline-offset: 2px;
+    }
+
+    /* Prevenir saltos de layout en imágenes */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Mejorar legibilidad en móviles */
+    @media (max-width: 768px) {
+        html {
+            font-size: 16px;
+        }
+
+        section {
+            scroll-margin-top: 80px;
+        }
+    }
+</style>

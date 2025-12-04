@@ -2,141 +2,70 @@
 
 ---
 
-<section id="precios" class="py-20 bg-gray-50 dark:bg-gray-800">
+<section id="precios" class="py-20">
     <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-4">
-            Planes de suscripción
-        </h2>
-        <p
-            class="text-gray-600 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto"
-        >
-            Elige el plan que mejor se adapte a tus necesidades como reciclador
-            profesional
-        </p>
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Planes de suscripción</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+                Estamos diseñando planes accesibles para recicladores
+                profesionales. Muy pronto tendrás opciones flexibles que se
+                adapten a tus necesidades.
+            </p>
 
-        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <!-- Plan Básico -->
+            <!-- Tarjeta de "Próximamente" -->
             <div
-                class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-12 shadow-lg border-2 border-dashed border-gray-300 dark:border-gray-700"
             >
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold mb-2">Básico</h3>
-                    <div
-                        class="text-4xl font-bold text-primary-600 dark:text-primary-400"
-                    >
-                        $50<span class="text-lg text-gray-500">COP</span>
-                    </div>
-                    <p class="text-gray-500 mt-2">/mes</p>
-                </div>
-
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Hasta 20 solicitudes/mes</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Rutas básicas optimizadas</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Soporte por correo</span>
-                    </li>
-                </ul>
-
-                <button
-                    class="w-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 py-3 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                <div class="text-6xl mb-6">⏳</div>
+                <h3 class="text-3xl font-bold mb-4">Planes en desarrollo</h3>
+                <p
+                    class="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto"
                 >
-                    Seleccionar plan
-                </button>
+                    Estamos trabajando en planes que ofrezcan el máximo valor
+                    para recicladores y ofertantes. Suscríbete para ser el
+                    primero en saberlo.
+                </p>
+
+                <div
+                    class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-semibold px-6 py-3 rounded-full bg-primary-50 dark:bg-primary-900/30"
+                >
+                    <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    Próximamente
+                </div>
             </div>
 
-            <!-- Plan Plus -->
-            <div
-                class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow border-2 border-primary-500 relative"
-            >
-                <div class="absolute top-0 right-6 -translate-y-1/2">
-                    <span
-                        class="bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-semibold"
-                    >
-                        Más popular
-                    </span>
-                </div>
-
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold mb-2">Plus</h3>
-                    <div
-                        class="text-4xl font-bold text-primary-600 dark:text-primary-400"
-                    >
-                        $150<span class="text-lg text-gray-500">COP</span>
-                    </div>
-                    <p class="text-gray-500 mt-2">/mes</p>
-                </div>
-
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Solicitudes ilimitadas</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Rutas avanzadas con IA</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>+2 utilidades exclusivas</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Soporte prioritario</span>
-                    </li>
-                </ul>
-
-                <button
-                    class="w-full bg-gradient-to-r from-primary-500 to-emerald-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-primary-500/30 transition-shadow"
+            {/* Info adicional */}
+            <div class="mt-12 grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <div
+                    class="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800"
                 >
-                    Seleccionar plan
-                </button>
-            </div>
-
-            <!-- Plan Premium -->
-            <div
-                class="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
-            >
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold mb-2">Premium</h3>
-                    <div
-                        class="text-4xl font-bold text-primary-600 dark:text-primary-400"
-                    >
-                        $300<span class="text-lg text-gray-500">COP</span>
-                    </div>
-                    <p class="text-gray-500 mt-2">/mes</p>
+                    <h4 class="font-semibold text-lg mb-3">
+                        Para recicladores
+                    </h4>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        Planes basados en volumen de solicitudes, herramientas
+                        de ruteo avanzado y acceso prioritario a ofertas.
+                    </p>
                 </div>
 
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Todas las funciones Plus</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>API para integración</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Dashboard avanzado</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="text-primary-500 mr-3">✓</span>
-                        <span>Soporte 24/7</span>
-                    </li>
-                </ul>
-
-                <button
-                    class="w-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 py-3 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                <div
+                    class="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800"
                 >
-                    Seleccionar plan
-                </button>
+                    <h4 class="font-semibold text-lg mb-3">Para ofertantes</h4>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        Acceso gratuito básico con opciones premium para
+                        solicitudes prioritarias y recompensas mejoradas.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
