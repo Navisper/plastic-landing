@@ -1,67 +1,122 @@
 ---
-
+// Reemplaza con tu enlace de Google Form
+const googleFormLink =
+    "https://forms.gle/eBR7dtS6vyPzTCwRA";
 ---
 
-<section id="como-funciona" class="py-20">
+<section id="quiero-participar" class="py-20 bg-white dark:bg-gray-900">
     <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-8">Cómo funciona Plastic</h2>
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4">
+                    Participa en plasticket!
+                </h2>
+                <p
+                    class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+                >
+                    Ayúdanos a validar Plasticket y sé de los primeros en probar la
+                    plataforma. Tu opinión es crucial para construir la mejor
+                    solución.
+                </p>
+            </div>
 
-            <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <div class="text-center">
-                    <div
-                        class="w-20 h-20 bg-gradient-to-br from-primary-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4"
-                    >
-                        <span class="text-white text-2xl">1</span>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Regístrate</h3>
-                    <p class="text-gray-600 dark:text-gray-400">
-                        Únete como ofertante o reciclador
-                    </p>
-                </div>
+            <!-- CTA principal -->
+            <div
+                class="text-center bg-gradient-to-br from-primary-50 to-emerald-50 dark:from-primary-900/20 dark:to-emerald-900/20 rounded-2xl p-8 border border-primary-100 dark:border-primary-800/30"
+            >
+                
 
-                <div class="text-center">
-                    <div
-                        class="w-20 h-20 bg-gradient-to-br from-primary-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4"
-                    >
-                        <span class="text-white text-2xl">2</span>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Conecta</h3>
-                    <p class="text-gray-600 dark:text-gray-400">
-                        Encuentra reciclaje o recicladores cercanos
-                    </p>
-                </div>
+                <p
+                    class="text-gray-700 dark:text-gray-300 mb-8 max-w-lg mx-auto"
+                >
+                    Contesta nuestro breve formulario (5 preguntas) para
+                    ayudarnos a entender tus necesidades y cómo Plastic puede
+                    ayudarte.
+                </p>
 
-                <div class="text-center">
-                    <div
-                        class="w-20 h-20 bg-gradient-to-br from-primary-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                {/* Botón que redirige a Google Form */}
+                <a
+                    href={googleFormLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-primary-500 to-emerald-600 text-white hover:shadow-xl hover:shadow-primary-500/30 px-10 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:-translate-y-1"
+                >
+                    <span>Ir al formulario de participación</span>
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                     >
-                        <span class="text-white text-2xl">3</span>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Recicla</h3>
-                    <p class="text-gray-600 dark:text-gray-400">
-                        Coordina la recolección y gana recompensas
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+
+                <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">
+                    Al hacer clic serás redirigido a un formulario de Google
+                    Forms. Los datos son confidenciales y solo para fines de
+                    investigación.
+                </p>
+
+                {/* Info adicional */}
+                <div
+                    class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800"
+                >
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        <span
+                            class="font-semibold text-primary-600 dark:text-primary-400"
+                            >Tiempo estimado:</span
+                        > 3-5 minutos
                     </p>
                 </div>
             </div>
 
-            <!-- Video de interacción de la app (placeholder) -->
-            <div
-                id="video-demo"
-                class="relative rounded-2xl overflow-hidden shadow-2xl max-w-3xl mx-auto"
-            >
-                <div
-                    class="aspect-video bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center"
-                >
-                    <div class="text-center">
-                        <div class="text-6xl mb-4">📱</div>
-                        <p class="text-white text-xl">
-                            Video demo de la aplicación
-                        </p>
-                        <p class="text-gray-400 mt-2">
-                            (Interfaz de usuario mostrando funcionalidades)
-                        </p>
+            {/* Sección de proceso */}
+            <div class="mt-12 grid md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div
+                        class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-3"
+                    >
+                        <span class="text-primary-600 dark:text-primary-400"
+                            >1</span
+                        >
                     </div>
+                    <h4 class="font-semibold mb-2">Completa el formulario</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        5 preguntas clave sobre tus necesidades
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-3"
+                    >
+                        <span class="text-primary-600 dark:text-primary-400"
+                            >2</span
+                        >
+                    </div>
+                    <h4 class="font-semibold mb-2">Validamos tus respuestas</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Analizamos para mejorar la solución
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-3"
+                    >
+                        <span class="text-primary-600 dark:text-primary-400"
+                            >3</span
+                        >
+                    </div>
+                    <h4 class="font-semibold mb-2">Te contactamos</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Si calificas para pruebas tempranas
+                    </p>
                 </div>
             </div>
         </div>
