@@ -1,43 +1,72 @@
 ---
+
 ---
 
-<section class="relative overflow-hidden min-h-screen flex items-center justify-center">
-
+<section class="relative overflow-hidden">
     <div
-            class="absolute inset-0 bg-gradient-to-br from-primary-50/20 to-emerald-50/10 dark:from-gray-900 dark:to-gray-800"
+        class="absolute inset-0 bg-gradient-to-br from-primary-50/20 to-emerald-50/10 dark:from-gray-900 dark:to-gray-800"
     >
     </div>
 
-    <div class="container mx-auto px-4 relative z-10 max-w-6xl">
-        <div class="text-center">
-
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-12 uppercase leading-tight tracking-wide">
-                <span class="block text-gray-900 dark:text-white">
-                    Encuentra reciclaje disponible
-                </span>
+    <div class="container mx-auto px-4 py-20 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1
+                class="text-4xl md:text-6xl font-bold mb-6 uppercase leading-tight"
+            >
+                <span class="block">Encuentra reciclaje disponible</span>
                 <span
-                        class="bg-gradient-to-r from-primary-600 to-emerald-500 bg-clip-text text-transparent block mt-2"
+                    class="bg-gradient-to-r from-primary-600 to-emerald-500 bg-clip-text text-transparent"
                 >
                     en tiempo real en tu ciudad
                 </span>
             </h1>
 
             <p
-                    class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-20 max-w-2xl mx-auto leading-relaxed"
+                class="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto"
             >
-                Somos una plataforma que te muestra puntos de reciclaje cercanos,
-                cantidades disponibles y materiales específicos listos para recoger.
+                Somos una plataforma que te muestra puntos de reciclaje
+                cercanos, cantidades disponibles y materiales específicos listos
+                para recoger.
             </p>
 
-            <div class="flex justify-center items-center">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <a
-                        href="#quiero-participar"
-                        class="bg-gradient-to-r from-primary-500 to-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl hover:shadow-primary-500/40 transition-all duration-300 transform hover:-translate-y-1 w-full sm:w-auto shadow-lg"
+                    href="#mapa-ibague"
+                    class="bg-gradient-to-r from-primary-500 to-emerald-600 text-white px-6 md:px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-primary-500/30 transition-all duration-300 transform hover:-translate-y-1"
                 >
-                    ¡Quiero ver dónde hay reciclaje disponible, ya!
+                    Quiero ver dónde hay reciclaje disponible, ya!
                 </a>
             </div>
 
+            <!-- Sección de valor agregado -->
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto"
+            >
+                
+                <div class="text-center">
+                    <div
+                        class="text-3xl font-bold text-primary-600 dark:text-primary-400"
+                    >
+                        -70%
+                    </div>
+
+                    <div class="text-gray-600 dark:text-gray-400">
+                        Menos tiempo perdido
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="text-3xl font-bold text-primary-600 dark:text-primary-400"
+                    >
+                        +200%
+                    </div>
+
+                    <div class="text-gray-600 dark:text-gray-400">
+                        Más toneladas procesadas
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
