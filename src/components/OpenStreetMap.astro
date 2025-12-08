@@ -1,790 +1,371 @@
 ---
-// Coordenadas del centro de Ibagué
-const centerLat = 4.437;
-const centerLng = -75.233;
-const zoom = 14;
-
-// Solicitudes simuladas en Ibagué
-const simulatedRequests = [
-    {
-        id: 1,
-        lat: 4.437,
-        lng: -75.233,
-        material: "PET",
-        quantity: "5-10 kg",
-        type: "hogar",
-        address: "Barrio La Granja",
-        description: "Botellas plásticas",
-        color: "#3B82F6",
-    },
-    {
-        id: 2,
-        lat: 4.445,
-        lng: -75.215,
-        material: "Cartón",
-        quantity: "10-20 kg",
-        type: "negocio",
-        address: "Centro Comercial La Estación",
-        description: "Cajas de embalaje",
-        color: "#10B981",
-    },
-    {
-        id: 3,
-        lat: 4.428,
-        lng: -75.242,
-        material: "Vidrio",
-        quantity: "3-5 kg",
-        type: "hogar",
-        address: "Barrio Belén",
-        description: "Botellas de vidrio",
-        color: "#3B82F6",
-    },
-    {
-        id: 4,
-        lat: 4.452,
-        lng: -75.228,
-        material: "PET",
-        quantity: "8-12 kg",
-        type: "restaurante",
-        address: "Avenida Quinta",
-        description: "Botellas de bebidas",
-        color: "#F59E0B",
-    },
-    {
-        id: 5,
-        lat: 4.435,
-        lng: -75.205,
-        material: "Aluminio",
-        quantity: "2-3 kg",
-        type: "hogar",
-        address: "Barrio Tejar",
-        description: "Latas de aluminio",
-        color: "#3B82F6",
-    },
-    {
-        id: 6,
-        lat: 4.422,
-        lng: -75.218,
-        material: "Cartón",
-        quantity: "15-25 kg",
-        type: "negocio",
-        address: "Zona Industrial",
-        description: "Cajas industriales",
-        color: "#10B981",
-    },
-    {
-        id: 7,
-        lat: 4.438,
-        lng: -75.225,
-        material: "Tetrapak",
-        quantity: "4-6 kg",
-        type: "hogar",
-        address: "Barrio Galán",
-        description: "Cajas de leche",
-        color: "#3B82F6",
-    },
-    {
-        id: 8,
-        lat: 4.43,
-        lng: -75.238,
-        material: "Vidrio",
-        quantity: "6-8 kg",
-        type: "restaurante",
-        address: "Barrio Murillo Toro",
-        description: "Botellas de vino",
-        color: "#F59E0B",
-    },
-];
-// Enlace del formulario
-const googleFormLink =
-    "https://forms.gle/goG54XAjUvh2KCc38";
-
-// Generar URL para el mapa estático con marcadores
-const generateStaticMapUrl = () => {
-    // Crear marcadores para el mapa estático
-    const markers = simulatedRequests
-        .map(
-            (req) =>
-                `&markers=color:${req.type === "hogar" ? "blue" : req.type === "negocio" ? "green" : "orange"}%7Clabel:${req.id}%7C${req.lat},${req.lng}`,
-        )
-        .join("");
-
-    return `https://maps.googleapis.com/maps/api/staticmap?center=${centerLat},${centerLng}&zoom=${zoom}&size=800x600&scale=2${markers}`;
-};
-
-// Opción 2: Usar mapa de OpenStreetMap estático con sobreposición
-const useStaticMap = true;
+// src/components/OpenStreetMap.astro
+// Mapa interactivo de gestión de reciclaje Plasticket
+const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
 ---
 
-<section class="py-20 bg-white dark:bg-gray-900">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold mb-4">
-                Solicitudes de reciclaje en Ibagué
-            </h2>
-            <p
-                class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
-            >
-                Visualización interactiva de cómo Plasticket muestra las
-                solicitudes de recolección en tiempo real.
-            </p>
-        </div>
-
-        <!-- Contenedor principal del mapa -->
-        <div id="mapa-ibague", class="max-w-6xl mx-auto mb-10">
-            <div
-                class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700"
-            >
-                <!-- Header -->
-                <div
-                    class="bg-gradient-to-r from-primary-500 to-emerald-600 px-6 py-4"
-                >
-                    <div
-                        class="flex flex-col md:flex-row justify-between items-center"
-                    >
-                        <div class="text-white">
-                            <h3 class="text-xl font-bold">
-                                Mapa de Ibagué - Solicitudes Activas
-                            </h3>
-                        </div>
-                        <div class="flex items-center gap-4 mt-3 md:mt-0">
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-blue-500 rounded-full">
-                                </div>
-                                <span class="text-white text-sm">Hogares</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-green-500 rounded-full">
-                                </div>
-                                <span class="text-white text-sm">Negocios</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-yellow-500 rounded-full">
-                                </div>
-                                <span class="text-white text-sm"
-                                    >Restaurantes</span
-                                >
-                            </div>
-                        </div>
+<div id="mapa-ibague" class="max-w-7xl mx-auto">
+    <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700 mt-8">
+        <div class="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <i data-lucide="recycle" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div class="text-white">
+                        <h3 class="text-xl font-bold">Plasticket App</h3>
+                        <p class="text-sm opacity-90">Sistema de gestión de recolección</p>
                     </div>
                 </div>
-
-                <!-- Mapa estático con puntos superpuestos absolutos -->
-                <div class="relative">
-                    <!-- Contenedor del mapa -->
-                    <div
-                        class="h-[500px] md:h-[600px] bg-gray-100 dark:bg-gray-800 relative overflow-hidden"
-                    >
-                        <!-- Mapa estático de fondo x-->
-                        <img
-                            src="/mapa-ibague-static.jpg"
-                            alt="Mapa estático de Ibagué"
-                            class="w-full h-full object-cover"
-                        />
-
-                        <!-- Capa de puntos en posiciones absolutas relativas al contenedor -->
-                        <div class="absolute inset-0">
-                            <!-- Puntos de recolección -->
-                            <div
-                                class="point absolute"
-                                style="top: 30%; left: 45%;"
-                                data-id="1"
-                                data-type="hogar"
-                            >
-                                <div
-                                    class="w-10 h-10 bg-blue-500 rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform duration-300 animate-pulse"
-                                >
-                                </div>
-                                <div
-                                    class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-64 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-300"
-                                >
-                                    <div
-                                        class="font-bold text-gray-800 dark:text-gray-200 mb-2"
-                                    >
-                                        PET - 5-10 kg
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-1"
-                                    >
-                                        📍 Barrio La Granja
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-2"
-                                    >
-                                        🏠 Hogar
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-500 dark:text-gray-400"
-                                    >
-                                        Botellas plásticas acumuladas
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="point absolute"
-                                style="top: 25%; left: 60%;"
-                                data-id="2"
-                                data-type="negocio"
-                            >
-                                <div
-                                    class="w-10 h-10 bg-green-500 rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform duration-300 animate-pulse"
-                                >
-                                </div>
-                                <div
-                                    class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-64 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-300"
-                                >
-                                    <div
-                                        class="font-bold text-gray-800 dark:text-gray-200 mb-2"
-                                    >
-                                        Cartón - 10-20 kg
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-1"
-                                    >
-                                        📍 Centro Comercial La Estación
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-2"
-                                    >
-                                        🏢 Negocio
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-500 dark:text-gray-400"
-                                    >
-                                        Cajas de embalaje de tienda
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="point absolute"
-                                style="top: 50%; left: 40%;"
-                                data-id="3"
-                                data-type="hogar"
-                            >
-                                <div
-                                    class="w-10 h-10 bg-blue-500 rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform duration-300 animate-pulse"
-                                >
-                                </div>
-                                <div
-                                    class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-64 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-300"
-                                >
-                                    <div
-                                        class="font-bold text-gray-800 dark:text-gray-200 mb-2"
-                                    >
-                                        Vidrio - 3-5 kg
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-1"
-                                    >
-                                        📍 Barrio Belén
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-2"
-                                    >
-                                        🏠 Hogar
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-500 dark:text-gray-400"
-                                    >
-                                        Botellas de vidrio varias
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="point absolute"
-                                style="top: 20%; left: 55%;"
-                                data-id="4"
-                                data-type="restaurante"
-                            >
-                                <div
-                                    class="w-10 h-10 bg-yellow-500 rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform duration-300 animate-pulse"
-                                >
-                                </div>
-                                <div
-                                    class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-64 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-300"
-                                >
-                                    <div
-                                        class="font-bold text-gray-800 dark:text-gray-200 mb-2"
-                                    >
-                                        PET - 8-12 kg
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-1"
-                                    >
-                                        📍 Avenida Quinta
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-2"
-                                    >
-                                        🍴 Restaurante
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-500 dark:text-gray-400"
-                                    >
-                                        Botellas de bebidas del restaurante
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="point absolute"
-                                style="top: 45%; left: 35%;"
-                                data-id="5"
-                                data-type="hogar"
-                            >
-                                <div
-                                    class="w-10 h-10 bg-blue-500 rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform duration-300 animate-pulse"
-                                >
-                                </div>
-                                <div
-                                    class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-64 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-300"
-                                >
-                                    <div
-                                        class="font-bold text-gray-800 dark:text-gray-200 mb-2"
-                                    >
-                                        Aluminio - 2-3 kg
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-1"
-                                    >
-                                        📍 Barrio Tejar
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-2"
-                                    >
-                                        🏠 Hogar
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-500 dark:text-gray-400"
-                                    >
-                                        Latas de aluminio y conservas
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="point absolute"
-                                style="top: 65%; left: 50%;"
-                                data-id="6"
-                                data-type="negocio"
-                            >
-                                <div
-                                    class="w-10 h-10 bg-green-500 rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform duration-300 animate-pulse"
-                                >
-                                </div>
-                                <div
-                                    class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-64 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-300"
-                                >
-                                    <div
-                                        class="font-bold text-gray-800 dark:text-gray-200 mb-2"
-                                    >
-                                        Cartón - 15-25 kg
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-1"
-                                    >
-                                        📍 Zona Industrial
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-2"
-                                    >
-                                        🏢 Negocio
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-500 dark:text-gray-400"
-                                    >
-                                        Cajas de empaque industrial
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="point absolute"
-                                style="top: 40%; left: 48%;"
-                                data-id="7"
-                                data-type="hogar"
-                            >
-                                <div
-                                    class="w-10 h-10 bg-blue-500 rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform duration-300 animate-pulse"
-                                >
-                                </div>
-                                <div
-                                    class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-64 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-300"
-                                >
-                                    <div
-                                        class="font-bold text-gray-800 dark:text-gray-200 mb-2"
-                                    >
-                                        Tetrapak - 4-6 kg
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-1"
-                                    >
-                                        📍 Barrio Galán
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-2"
-                                    >
-                                        🏠 Hogar
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-500 dark:text-gray-400"
-                                    >
-                                        Cajas de leche y jugo
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="point absolute"
-                                style="top: 55%; left: 45%;"
-                                data-id="8"
-                                data-type="restaurante"
-                            >
-                                <div
-                                    class="w-10 h-10 bg-yellow-500 rounded-full border-4 border-white shadow-xl cursor-pointer hover:scale-125 transition-transform duration-300 animate-pulse"
-                                >
-                                </div>
-                                <div
-                                    class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 w-64 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-300"
-                                >
-                                    <div
-                                        class="font-bold text-gray-800 dark:text-gray-200 mb-2"
-                                    >
-                                        Vidrio - 6-8 kg
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-1"
-                                    >
-                                        📍 Barrio Murillo Toro
-                                    </div>
-                                    <div
-                                        class="text-sm text-gray-600 dark:text-gray-400 mb-2"
-                                    >
-                                        🍴 Restaurante
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-500 dark:text-gray-400"
-                                    >
-                                        Botellas de vino y licores
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Leyenda flotante -->
-                        <div
-                            class="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-700"
-                        >
-                            <div
-                                class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2"
-                            >
-                                Leyenda
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="w-3 h-3 bg-blue-500 rounded-full"
-                                    >
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-600 dark:text-gray-400"
-                                    >
-                                        Hogares
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="w-3 h-3 bg-green-500 rounded-full"
-                                    >
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-600 dark:text-gray-400"
-                                    >
-                                        Negocios
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="w-3 h-3 bg-yellow-500 rounded-full"
-                                    >
-                                    </div>
-                                    <div
-                                        class="text-xs text-gray-600 dark:text-gray-400"
-                                    >
-                                        Restaurantes
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="mt-3 md:mt-0">
+                    <div class="text-white text-sm bg-white/20 px-3 py-1 rounded-full">
+                        <span class="font-semibold">10</span> solicitudes activas
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {/* CTA del formulario */}
-    <div class="text-center max-w-4xl mx-auto">
-        <div
-            class="bg-gradient-to-r from-primary-50 to-emerald-50 dark:from-primary-900/20 dark:to-emerald-900/20 rounded-2xl p-8 md:p-12 border border-primary-100 dark:border-primary-800/30"
-        >
-            <a
+        <div class="relative min-h-[600px]">
+            <div id="map" class="absolute inset-0 z-0"></div>
+
+            <div class="absolute top-4 left-4 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-lg z-10 p-4 border border-gray-200 dark:border-gray-700">
+                <h3 class="font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                    Estadísticas del día
+                </h3>
+
+                <div class="space-y-3">
+                    <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Solicitudes completadas</p>
+                        <p class="font-bold text-2xl text-blue-600 dark:text-blue-400">7</p>
+                    </div>
+
+                    <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Material recolectado</p>
+                        <p class="font-bold text-2xl text-green-600 dark:text-green-400">1,245 kg</p>
+                    </div>
+
+                    <div class="bg-purple-50 dark:bg-purple-900/30 p-3 rounded-lg">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Equipos activos</p>
+                        <p class="font-bold text-2xl text-purple-600 dark:text-purple-400">5</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Tipos de material</h4>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Plástico</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-300">35%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 35%"></div>
+                        </div>
+
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Papel/Cartón</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-300">25%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 25%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="infoPanel" class="hidden absolute top-4 right-4 w-96 bg-white dark:bg-gray-800 rounded-xl shadow-xl z-10 overflow-hidden border border-gray-200 dark:border-gray-700">
+                <!-- Se llena dinámicamente con JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center max-w-4xl mx-auto mt-12">
+    <div class="bg-gradient-to-r from-primary-50 to-emerald-50 dark:from-primary-900/20 dark:to-emerald-900/20 rounded-2xl p-8 md:p-12 border border-primary-100 dark:border-primary-800/30">
+
+        <a
                 href={googleFormLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="group inline-flex items-center justify-center gap-4 bg-gradient-to-r from-primary-500 to-emerald-600 hover:from-primary-600 hover:to-emerald-700 text-white px-12 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-500/30"
-            >
-                <span>¡Llena el formulario ahora!</span>
-                <svg
+        >
+            <span>¡Quiero conocer más
+                   y llenar el formulario!
+            </span>
+            <svg
                     class="w-6 h-6 group-hover:translate-x-2 transition-transform"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                >
-                    <path
+            >
+                <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
                         stroke-width="2"
                         d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-            </a>
+            </svg>
+        </a>
 
-            <div class="mt-8 flex flex-wrap justify-center gap-8">
-                <div class="text-center">
-                    <div
-                        class="text-2xl font-bold text-primary-600 dark:text-primary-400"
-                    >
-                        3-5
-                    </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
-                        Minutos
-                    </div>
+        <div class="mt-8 flex flex-wrap justify-center gap-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    100%
                 </div>
-                <div class="text-center">
-                    <div
-                        class="text-2xl font-bold text-primary-600 dark:text-primary-400"
-                    >
-                        100%
-                    </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
-                        Confidencial
-                    </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    Gratuito y sin compromiso
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    24/7
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    Disponibilidad
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    Potencia
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    tu negocio de reciclaje
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 
 <script>
-    // Interactividad para el mapa
-    document.addEventListener("DOMContentLoaded", function () {
-        // Agregar hover a los marcadores
-        const markers = document.querySelectorAll(".marker-point");
+    // Función para cargar scripts dinámicamente
+    function loadScript(src, onLoad) {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = onLoad;
+        document.head.appendChild(script);
+    }
 
-        markers.forEach((marker) => {
-            // Agregar clase group para tooltip
-            marker.classList.add("group");
+    // Función para cargar CSS dinámicamente
+    function loadCSS(href) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+    }
 
-            // Click en marcador
-            marker.addEventListener(
-                "click",
-                function (this: HTMLElement, e: Event) {
-                    e.stopPropagation();
+    // Función para inicializar el mapa
+    function initializeMap() {
+        // Asegurarse de que Leaflet y Lucide estén disponibles
+        if (typeof L === 'undefined') {
+            console.error('Leaflet no se cargó correctamente');
+            return;
+        }
 
-                    const id = this.getAttribute("data-id");
-                    const type = this.getAttribute("data-type");
-                    const material = this.getAttribute("data-material");
+        // Importar el módulo del mapa
+        import('./mapa-interactivo.js').then(module => {
+            // Inicializar el mapa
+            module.initMap();
 
-                    // Efecto visual
-                    this.style.animation = "none";
-                    this.style.transform = "translate(-50%, -50%) scale(1.3)";
+            // Mostrar notificación después de un segundo
+            setTimeout(() => {
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                notification.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        <span>Haz clic en cualquier marcador para ver detalles</span>
+                    </div>
+                `;
+                document.body.appendChild(notification);
 
-                    // Mostrar mensaje en consola
-                    console.log(
-                        `Solicitud seleccionada: #${id} | ${material} | ${type}`,
-                    );
+                // Actualizar iconos en la notificación
+                if (window.lucide && window.lucide.createIcons) {
+                    window.lucide.createIcons();
+                }
 
-                    // Restaurar después de 1 segundo
-                    setTimeout(() => {
-                        this.style.animation = "pulse 2s infinite";
-                        this.style.transform = "translate(-50%, -50%) scale(1)";
-                    }, 1000);
-                },
-            );
+                setTimeout(() => notification.remove(), 5000);
+            }, 1000);
+        }).catch(error => {
+            console.error('Error al cargar el módulo del mapa:', error);
         });
+    }
 
-        // Sistema de filtros
-        const filterButtons = document.querySelectorAll(".filter-btn");
-        const markersAll = document.querySelectorAll(".marker-point");
+    // Función principal de inicialización
+    function initMapComponent() {
+        // Cargar Leaflet CSS si no está cargado
+        if (!document.querySelector('link[href*="leaflet"]')) {
+            loadCSS('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+        }
 
-        filterButtons.forEach((button) => {
-            button.addEventListener("click", function (this: HTMLElement) {
-                // Actualizar botones activos
-                filterButtons.forEach((btn) => btn.classList.remove("active"));
-                this.classList.add("active");
+        // Cargar Lucide Icons si no está cargado
+        if (!window.lucide) {
+            loadScript('https://unpkg.com/lucide@latest/dist/umd/lucide.js', function() {
+                // Inicializar iconos de Lucide
+                if (window.lucide && window.lucide.createIcons) {
+                    window.lucide.createIcons();
+                }
 
-                const filterValue = this.getAttribute("data-filter");
-
-                // Filtrar marcadores
-                let visibleCount = 0;
-                markersAll.forEach((marker) => {
-                    const markerElement = marker as HTMLElement;
-                    const markerType = markerElement.getAttribute("data-type");
-
-                    if (filterValue === "all" || markerType === filterValue) {
-                        markerElement.style.display = "block";
-                        visibleCount++;
-
-                        // Efecto de aparición
-                        markerElement.style.animation = "none";
-                        setTimeout(() => {
-                            markerElement.style.animation = `pulse 2s infinite ${visibleCount * 0.1}s`;
-                        }, 10);
-                    } else {
-                        markerElement.style.display = "none";
-                    }
-                });
-
-                // Actualizar contador en la leyenda
-                const counterElement = document.querySelector(
-                    ".text-xs.text-gray-500",
-                );
-                if (counterElement) {
-                    counterElement.textContent = `${visibleCount} solicitudes activas`;
+                // Cargar Leaflet JS si no está cargado
+                if (!window.L) {
+                    loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', function() {
+                        // Inicializar el mapa después de cargar Leaflet
+                        initializeMap();
+                    });
+                } else {
+                    // Si Leaflet ya está cargado, inicializar el mapa
+                    initializeMap();
                 }
             });
-        });
+        } else {
+            // Si Lucide ya está cargado, inicializar iconos
+            if (window.lucide && window.lucide.createIcons) {
+                window.lucide.createIcons();
+            }
 
-        // Prevenir clics en el iframe que afecten a los puntos
-        const iframe = document.querySelector("iframe");
-        if (iframe) {
-            iframe.addEventListener("load", function () {
-                this.style.pointerEvents = "none";
-            });
+            // Cargar Leaflet JS si no está cargado
+            if (!window.L) {
+                loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', function() {
+                    // Inicializar el mapa después de cargar Leaflet
+                    initializeMap();
+                });
+            } else {
+                // Si Leaflet ya está cargado, inicializar el mapa
+                initializeMap();
+            }
         }
-        // Mejorar experiencia en móviles
-        if ("ontouchstart" in window) {
-            markers.forEach((marker) => {
-                let tapTimer: number | undefined;
+    }
 
-                marker.addEventListener(
-                    "touchstart",
-                    function (this: HTMLElement, e: Event) {
-                        e.preventDefault();
-                        tapTimer = window.setTimeout(() => {
-                            this.classList.add("scale-125");
-                        }, 100);
-                    },
-                );
-
-                marker.addEventListener(
-                    "touchend",
-                    function (this: HTMLElement, e: Event) {
-                        e.preventDefault();
-                        if (tapTimer !== undefined) {
-                            clearTimeout(tapTimer);
-                        }
-                        this.classList.remove("scale-125");
-                    },
-                );
-            });
-        }
+    // Inicializar cuando el componente esté visible en el viewport
+    // Esto es más eficiente que usar DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Pequeño delay para asegurar que todo esté listo
+        setTimeout(initMapComponent, 100);
     });
+
+    // También inicializar cuando el componente sea visible (Intersection Observer)
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initMapComponent();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observar el contenedor del mapa
+        const mapContainer = document.getElementById('mapa-ibague');
+        if (mapContainer) {
+            observer.observe(mapContainer);
+        }
+    }
 </script>
 
 <style>
-    /* Animaciones */
+    /* Estilos específicos para el mapa */
+    #map {
+        width: 100%;
+        height: 600px;
+        z-index: 0;
+    }
+
+    .custom-div-icon {
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .leaflet-div-icon {
+        background: transparent !important;
+        border: none !important;
+    }
+
     @keyframes pulse {
-        0%,
-        100% {
-            transform: translate(-50%, -50%) scale(1);
+        0%, 100% {
             opacity: 1;
+            transform: scale(1);
         }
         50% {
-            transform: translate(-50%, -50%) scale(1.1);
-            opacity: 0.9;
+            opacity: 0.8;
+            transform: scale(1.05);
         }
     }
 
-    .marker-point {
+    .animate-pulse {
         animation: pulse 2s infinite;
-        cursor: pointer;
-        z-index: 10;
     }
 
-    .marker-point:hover {
-        z-index: 100;
-        animation-play-state: paused;
+    .leaflet-popup-content-wrapper {
+        border-radius: 10px !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
     }
 
-    /* Tooltip mejorado */
-    .group:hover .absolute {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translate(-50%, 0) !important;
+    .leaflet-popup-content {
+        margin: 12px 16px !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* Efecto de onda para marcadores */
-    .marker-point::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: inherit;
-        animation: wave 2s infinite;
-        z-index: -1;
-        transform: translate(-50%, -50%);
-        opacity: 0.5;
+    #teamSelector {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 8px;
     }
 
-    @keyframes wave {
-        0% {
-            width: 100%;
-            height: 100%;
-            opacity: 0.5;
-        }
-        100% {
-            width: 200%;
-            height: 200%;
-            opacity: 0;
-        }
+    #teamSelector::-webkit-scrollbar {
+        width: 6px;
     }
 
-    /* Responsive */
+    #teamSelector::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    #teamSelector::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+
+    #teamSelector::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    .dark #teamSelector::-webkit-scrollbar-track {
+        background: #374151;
+    }
+
+    .dark #teamSelector::-webkit-scrollbar-thumb {
+        background: #6B7280;
+    }
+
+    .dark #teamSelector::-webkit-scrollbar-thumb:hover {
+        background: #9CA3AF;
+    }
+
     @media (max-width: 768px) {
-        .h-\[500px\] {
-            height: 400px;
+        #map {
+            height: 500px;
         }
 
-        .marker-point {
-            width: 24px;
-            height: 24px;
-            border-width: 2px;
+        .absolute.top-4.left-4,
+        #infoPanel {
+            position: relative !important;
+            width: 100% !important;
+            margin-bottom: 1rem;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
         }
 
-        /* Tooltip más pequeño en móviles */
-        .group .absolute {
-            width: 200px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
+        #infoPanel {
+            max-height: 400px;
+            overflow-y: auto;
         }
     }
 
-    /* Botones de filtro activos */
-    .filter-btn.active {
-        box-shadow:
-            0 4px 6px -1px rgba(0, 0, 0, 0.2),
-            0 2px 4px -1px rgba(0, 0, 0, 0.1);
-        font-weight: 600;
+    .dark .leaflet-popup-content-wrapper {
+        background-color: #1F2937;
+        color: #F9FAFB;
     }
 
-    /* Smooth transitions */
-    .marker-point {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    .dark .leaflet-popup-tip {
+        background-color: #1F2937;
     }
 </style>

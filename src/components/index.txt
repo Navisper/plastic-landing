@@ -12,8 +12,8 @@ import VideoDemo from '../components/VideoDemo.astro';
 <Layout>
 	<Header />
 	<Hero />
-    <Features />
-    <OpenStreetMap />
+	<Features />
 	<VideoDemo />
+	<OpenStreetMap />
 	<Footer />
 </Layout>
