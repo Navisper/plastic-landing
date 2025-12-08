@@ -7,65 +7,35 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
 
 <section class="py-20 bg-white dark:bg-gray-900">
     <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold mb-4">
-                Sistema de Gestión de Recolección - Plasticket
+        <!-- Título principal EXTERIOR al recuadro del mapa -->
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                Mapa Interactivo de Ibagué
             </h2>
             <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Visualización en tiempo real de las solicitudes de recolección y asignación de equipos en Ibagué.
+                Haz clic en cualquier marcador para ver detalles y asignar equipos de recolección.
             </p>
         </div>
 
         <!-- Contenedor principal del mapa interactivo -->
         <div class="max-w-7xl mx-auto">
-            <!-- Barra superior de estadísticas -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 mb-6 flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center gap-4 mb-4 md:mb-0">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
-                            <i data-lucide="recycle" class="w-6 h-6 text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-800 dark:text-gray-200 text-xl">Plasticket App</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Sistema de gestión de recolección</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-6">
-                    <div class="text-center">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Solicitudes activas</p>
-                        <p class="font-bold text-2xl text-green-600">10</p>
-                    </div>
-                    <div class="hidden md:block h-8 w-px bg-gray-300"></div>
-                    <div class="text-center">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Equipos activos</p>
-                        <p class="font-bold text-2xl text-purple-600">5</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Contenedor del mapa con paneles -->
             <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                <!-- Header del mapa -->
+                <!-- Header del mapa (ahora con el logo y nombre de la app) -->
                 <div class="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-4">
                     <div class="flex flex-col md:flex-row justify-between items-center">
-                        <div class="text-white">
-                            <h3 class="text-xl font-bold">Mapa Interactivo de Ibagué</h3>
-                            <p class="text-sm opacity-90">Haz clic en cualquier marcador para ver detalles</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                                <i data-lucide="recycle" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div class="text-white">
+                                <h3 class="text-xl font-bold">Plasticket App</h3>
+                                <p class="text-sm opacity-90">Sistema de gestión de recolección</p>
+                            </div>
                         </div>
-                        <div class="flex items-center gap-4 mt-3 md:mt-0">
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                <span class="text-white text-sm">Equipos</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                                <span class="text-white text-sm">Puntos de recolección</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                <span class="text-white text-sm">Rutas asignadas</span>
+                        <div class="mt-3 md:mt-0">
+                            <div class="text-white text-sm bg-white/20 px-3 py-1 rounded-full">
+                                <span class="font-semibold">10</span> solicitudes activas
                             </div>
                         </div>
                     </div>
@@ -77,24 +47,24 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
                     <div id="map" class="absolute inset-0 z-0"></div>
 
                     <!-- Panel de estadísticas (izquierda) -->
-                    <div class="absolute top-4 left-4 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-lg z-10 p-4">
+                    <div class="absolute top-4 left-4 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-lg z-10 p-4 border border-gray-200 dark:border-gray-700">
                         <h3 class="font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                             <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
                             Estadísticas del día
                         </h3>
 
                         <div class="space-y-3">
-                            <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
+                            <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Solicitudes completadas</p>
                                 <p class="font-bold text-2xl text-blue-600 dark:text-blue-400">7</p>
                             </div>
 
-                            <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
+                            <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg">
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Material recolectado</p>
                                 <p class="font-bold text-2xl text-green-600 dark:text-green-400">1,245 kg</p>
                             </div>
 
-                            <div class="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-lg">
+                            <div class="bg-purple-50 dark:bg-purple-900/30 p-3 rounded-lg">
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Equipos activos</p>
                                 <p class="font-bold text-2xl text-purple-600 dark:text-purple-400">5</p>
                             </div>
@@ -105,7 +75,7 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
                             <div class="space-y-2">
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-600 dark:text-gray-400">Plástico</span>
-                                    <span class="font-medium">35%</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-300">35%</span>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                     <div class="bg-blue-500 h-2 rounded-full" style="width: 35%"></div>
@@ -113,7 +83,7 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
 
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-600 dark:text-gray-400">Papel/Cartón</span>
-                                    <span class="font-medium">25%</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-300">25%</span>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                     <div class="bg-green-500 h-2 rounded-full" style="width: 25%"></div>
@@ -123,7 +93,7 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
                     </div>
 
                     <!-- Panel de información (derecha - inicialmente oculto) -->
-                    <div id="infoPanel" class="hidden absolute top-4 right-4 w-96 bg-white dark:bg-gray-800 rounded-xl shadow-xl z-10 overflow-hidden">
+                    <div id="infoPanel" class="hidden absolute top-4 right-4 w-96 bg-white dark:bg-gray-800 rounded-xl shadow-xl z-10 overflow-hidden border border-gray-200 dark:border-gray-700">
                         <!-- Se llena dinámicamente con JavaScript -->
                     </div>
                 </div>
@@ -304,13 +274,52 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
+    /* Estilo para el dropdown de equipos con scroll */
+    #teamSelector {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 8px;
+    }
+
+    /* Scrollbar personalizada */
+    #teamSelector::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #teamSelector::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    #teamSelector::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+
+    #teamSelector::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    /* Dark mode scrollbar */
+    .dark #teamSelector::-webkit-scrollbar-track {
+        background: #374151;
+    }
+
+    .dark #teamSelector::-webkit-scrollbar-thumb {
+        background: #6B7280;
+    }
+
+    .dark #teamSelector::-webkit-scrollbar-thumb:hover {
+        background: #9CA3AF;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
         #map {
             height: 500px;
         }
 
-        .absolute.top-20.left-4,
+        .absolute.top-4.left-4,
         #infoPanel {
             position: relative !important;
             width: 100% !important;
@@ -319,5 +328,20 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
             left: auto !important;
             right: auto !important;
         }
+
+        #infoPanel {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    }
+
+    /* Asegurar que los textos sean legibles en dark mode */
+    .dark .leaflet-popup-content-wrapper {
+        background-color: #1F2937;
+        color: #F9FAFB;
+    }
+
+    .dark .leaflet-popup-tip {
+        background-color: #1F2937;
     }
 </style>
