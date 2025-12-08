@@ -1,188 +1,168 @@
 ---
 // src/components/OpenStreetMap.astro
 // Mapa interactivo de gestión de reciclaje Plasticket
-// Enlace del formulario (mantén el tuyo existente)
 const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
 ---
 
-<section class="py-20 bg-white dark:bg-gray-900">
-    <div class="container mx-auto px-4">
-        <!-- Título principal EXTERIOR al recuadro del mapa -->
-        <div class="text-center mb-8">
-            <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-                Mapa Interactivo de Ibagué
-            </h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Haz clic en cualquier marcador para ver detalles y asignar equipos de recolección.
-            </p>
-        </div>
-
-        <!-- Contenedor principal del mapa interactivo -->
-        <div id="mapa-ibague" class="max-w-7xl mx-auto">
-            <!-- Contenedor del mapa con paneles -->
-            <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                <!-- Header del mapa (ahora con el logo y nombre de la app) -->
-                <div class="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-4">
-                    <div class="flex flex-col md:flex-row justify-between items-center">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                                <i data-lucide="recycle" class="w-6 h-6 text-white"></i>
-                            </div>
-                            <div class="text-white">
-                                <h3 class="text-xl font-bold">Plasticket App</h3>
-                                <p class="text-sm opacity-90">Sistema de gestión de recolección</p>
-                            </div>
-                        </div>
-                        <div class="mt-3 md:mt-0">
-                            <div class="text-white text-sm bg-white/20 px-3 py-1 rounded-full">
-                                <span class="font-semibold">10</span> solicitudes activas
-                            </div>
-                        </div>
+<div id="mapa-ibague" class="max-w-7xl mx-auto">
+    <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700 mt-8">
+        <div class="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <i data-lucide="recycle" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div class="text-white">
+                        <h3 class="text-xl font-bold">Plasticket App</h3>
+                        <p class="text-sm opacity-90">Sistema de gestión de recolección</p>
                     </div>
                 </div>
-
-                <!-- Mapa y paneles -->
-                <div class="relative min-h-[600px]">
-                    <!-- Mapa Leaflet -->
-                    <div id="map" class="absolute inset-0 z-0"></div>
-
-                    <!-- Panel de estadísticas (izquierda) -->
-                    <div class="absolute top-4 left-4 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-lg z-10 p-4 border border-gray-200 dark:border-gray-700">
-                        <h3 class="font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                            <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-                            Estadísticas del día
-                        </h3>
-
-                        <div class="space-y-3">
-                            <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Solicitudes completadas</p>
-                                <p class="font-bold text-2xl text-blue-600 dark:text-blue-400">7</p>
-                            </div>
-
-                            <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg">
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Material recolectado</p>
-                                <p class="font-bold text-2xl text-green-600 dark:text-green-400">1,245 kg</p>
-                            </div>
-
-                            <div class="bg-purple-50 dark:bg-purple-900/30 p-3 rounded-lg">
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Equipos activos</p>
-                                <p class="font-bold text-2xl text-purple-600 dark:text-purple-400">5</p>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Tipos de material</h4>
-                            <div class="space-y-2">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-600 dark:text-gray-400">Plástico</span>
-                                    <span class="font-medium text-gray-800 dark:text-gray-300">35%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 35%"></div>
-                                </div>
-
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-600 dark:text-gray-400">Papel/Cartón</span>
-                                    <span class="font-medium text-gray-800 dark:text-gray-300">25%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: 25%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Panel de información (derecha - inicialmente oculto) -->
-                    <div id="infoPanel" class="hidden absolute top-4 right-4 w-96 bg-white dark:bg-gray-800 rounded-xl shadow-xl z-10 overflow-hidden border border-gray-200 dark:border-gray-700">
-                        <!-- Se llena dinámicamente con JavaScript -->
+                <div class="mt-3 md:mt-0">
+                    <div class="text-white text-sm bg-white/20 px-3 py-1 rounded-full">
+                        <span class="font-semibold">10</span> solicitudes activas
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {/* CTA del formulario */}
-    <div class="text-center max-w-4xl mx-auto mt-12">
-        <div class="bg-gradient-to-r from-primary-50 to-emerald-50 dark:from-primary-900/20 dark:to-emerald-900/20 rounded-2xl p-8 md:p-12 border border-primary-100 dark:border-primary-800/30">
-            <a
-                    href={googleFormLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group inline-flex items-center justify-center gap-4 bg-gradient-to-r from-primary-500 to-emerald-600 hover:from-primary-600 hover:to-emerald-700 text-white px-12 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-500/30"
+        <div class="relative min-h-[600px]">
+            <div id="map" class="absolute inset-0 z-0"></div>
+
+            <div class="absolute top-4 left-4 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-lg z-10 p-4 border border-gray-200 dark:border-gray-700">
+                <h3 class="font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                    Estadísticas del día
+                </h3>
+
+                <div class="space-y-3">
+                    <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Solicitudes completadas</p>
+                        <p class="font-bold text-2xl text-blue-600 dark:text-blue-400">7</p>
+                    </div>
+
+                    <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Material recolectado</p>
+                        <p class="font-bold text-2xl text-green-600 dark:text-green-400">1,245 kg</p>
+                    </div>
+
+                    <div class="bg-purple-50 dark:bg-purple-900/30 p-3 rounded-lg">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Equipos activos</p>
+                        <p class="font-bold text-2xl text-purple-600 dark:text-purple-400">5</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Tipos de material</h4>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Plástico</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-300">35%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 35%"></div>
+                        </div>
+
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Papel/Cartón</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-300">25%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 25%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="infoPanel" class="hidden absolute top-4 right-4 w-96 bg-white dark:bg-gray-800 rounded-xl shadow-xl z-10 overflow-hidden border border-gray-200 dark:border-gray-700">
+                <!-- Se llena dinámicamente con JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center max-w-4xl mx-auto mt-12">
+    <div class="bg-gradient-to-r from-primary-50 to-emerald-50 dark:from-primary-900/20 dark:to-emerald-900/20 rounded-2xl p-8 md:p-12 border border-primary-100 dark:border-primary-800/30">
+        <a
+                href={googleFormLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group inline-flex items-center justify-center gap-4 bg-gradient-to-r from-primary-500 to-emerald-600 hover:from-primary-600 hover:to-emerald-700 text-white px-12 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-500/30"
+        >
+            <span>¡Llena el formulario ahora!</span>
+            <svg
+                    class="w-6 h-6 group-hover:translate-x-2 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
             >
-                <span>¡Solicita recolección ahora!</span>
-                <svg
-                        class="w-6 h-6 group-hover:translate-x-2 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                >
-                    <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-            </a>
+                <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+        </a>
 
-            <div class="mt-8 flex flex-wrap justify-center gap-8">
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
-                        3-5
-                    </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
-                        Minutos para llenar
-                    </div>
+        <div class="mt-8 flex flex-wrap justify-center gap-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    3-5
                 </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
-                        24/7
-                    </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
-                        Disponibilidad
-                    </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    Minutos para llenar
                 </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
-                        100%
-                    </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
-                        Gratuito
-                    </div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    24/7
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    Disponibilidad
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    100%
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    Gratuito
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 
-<!-- Scripts necesarios -->
 <script>
-    // Importar el módulo del mapa
-    import { initMap } from './mapa-interactivo.js';
+    // Función para cargar scripts dinámicamente
+    function loadScript(src, onLoad) {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = onLoad;
+        document.head.appendChild(script);
+    }
 
-    // Inicializar cuando el DOM esté listo
-    document.addEventListener('DOMContentLoaded', function() {
-        // Cargar Leaflet CSS dinámicamente si no está cargado
-        if (!document.querySelector('link[href*="leaflet"]')) {
-            const leafletCSS = document.createElement('link');
-            leafletCSS.rel = 'stylesheet';
-            leafletCSS.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-            document.head.appendChild(leafletCSS);
+    // Función para cargar CSS dinámicamente
+    function loadCSS(href) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+    }
+
+    // Función para inicializar el mapa
+    function initializeMap() {
+        // Asegurarse de que Leaflet y Lucide estén disponibles
+        if (typeof L === 'undefined') {
+            console.error('Leaflet no se cargó correctamente');
+            return;
         }
 
-        // Cargar Lucide Icons
-        const lucideScript = document.createElement('script');
-        lucideScript.src = 'https://unpkg.com/lucide@latest/dist/umd/lucide.js';
-        lucideScript.onload = function() {
-            // Inicializar iconos
-            if (window.lucide && window.lucide.createIcons) {
-                window.lucide.createIcons();
-            }
-
+        // Importar el módulo del mapa
+        import('./mapa-interactivo.js').then(module => {
             // Inicializar el mapa
-            initMap();
+            module.initMap();
 
-            // Mostrar mensaje de bienvenida
+            // Mostrar notificación después de un segundo
             setTimeout(() => {
                 const notification = document.createElement('div');
                 notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
@@ -201,42 +181,90 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
 
                 setTimeout(() => notification.remove(), 5000);
             }, 1000);
-        };
-        document.head.appendChild(lucideScript);
+        }).catch(error => {
+            console.error('Error al cargar el módulo del mapa:', error);
+        });
+    }
 
-        // Cargar Leaflet JS si no está cargado
-        if (!window.L) {
-            const leafletScript = document.createElement('script');
-            leafletScript.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-            leafletScript.onload = function() {
-                // El mapa se inicializará después de cargar Lucide
-            };
-            document.head.appendChild(leafletScript);
-        } else {
-            // Si Leaflet ya está cargado, solo cargar Lucide
-            const lucideScript = document.createElement('script');
-            lucideScript.src = 'https://unpkg.com/lucide@latest/dist/umd/lucide.js';
-            lucideScript.onload = function() {
+    // Función principal de inicialización
+    function initMapComponent() {
+        // Cargar Leaflet CSS si no está cargado
+        if (!document.querySelector('link[href*="leaflet"]')) {
+            loadCSS('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+        }
+
+        // Cargar Lucide Icons si no está cargado
+        if (!window.lucide) {
+            loadScript('https://unpkg.com/lucide@latest/dist/umd/lucide.js', function() {
+                // Inicializar iconos de Lucide
                 if (window.lucide && window.lucide.createIcons) {
                     window.lucide.createIcons();
                 }
-                initMap();
-            };
-            document.head.appendChild(lucideScript);
+
+                // Cargar Leaflet JS si no está cargado
+                if (!window.L) {
+                    loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', function() {
+                        // Inicializar el mapa después de cargar Leaflet
+                        initializeMap();
+                    });
+                } else {
+                    // Si Leaflet ya está cargado, inicializar el mapa
+                    initializeMap();
+                }
+            });
+        } else {
+            // Si Lucide ya está cargado, inicializar iconos
+            if (window.lucide && window.lucide.createIcons) {
+                window.lucide.createIcons();
+            }
+
+            // Cargar Leaflet JS si no está cargado
+            if (!window.L) {
+                loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', function() {
+                    // Inicializar el mapa después de cargar Leaflet
+                    initializeMap();
+                });
+            } else {
+                // Si Leaflet ya está cargado, inicializar el mapa
+                initializeMap();
+            }
         }
+    }
+
+    // Inicializar cuando el componente esté visible en el viewport
+    // Esto es más eficiente que usar DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Pequeño delay para asegurar que todo esté listo
+        setTimeout(initMapComponent, 100);
     });
+
+    // También inicializar cuando el componente sea visible (Intersection Observer)
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initMapComponent();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observar el contenedor del mapa
+        const mapContainer = document.getElementById('mapa-ibague');
+        if (mapContainer) {
+            observer.observe(mapContainer);
+        }
+    }
 </script>
 
-<!-- Estilos específicos para el mapa -->
 <style>
-    /* Asegurar que el mapa ocupe todo el espacio */
+    /* Estilos específicos para el mapa */
     #map {
         width: 100%;
         height: 600px;
         z-index: 0;
     }
 
-    /* Estilos para los marcadores Leaflet */
     .custom-div-icon {
         background: transparent !important;
         border: none !important;
@@ -247,7 +275,6 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
         border: none !important;
     }
 
-    /* Animaciones */
     @keyframes pulse {
         0%, 100% {
             opacity: 1;
@@ -263,7 +290,6 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
         animation: pulse 2s infinite;
     }
 
-    /* Mejoras para popups */
     .leaflet-popup-content-wrapper {
         border-radius: 10px !important;
         box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
@@ -274,14 +300,12 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* Estilo para el dropdown de equipos con scroll */
     #teamSelector {
         max-height: 300px;
         overflow-y: auto;
         padding-right: 8px;
     }
 
-    /* Scrollbar personalizada */
     #teamSelector::-webkit-scrollbar {
         width: 6px;
     }
@@ -300,7 +324,6 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
         background: #555;
     }
 
-    /* Dark mode scrollbar */
     .dark #teamSelector::-webkit-scrollbar-track {
         background: #374151;
     }
@@ -313,7 +336,6 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
         background: #9CA3AF;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
         #map {
             height: 500px;
@@ -335,7 +357,6 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
         }
     }
 
-    /* Asegurar que los textos sean legibles en dark mode */
     .dark .leaflet-popup-content-wrapper {
         background-color: #1F2937;
         color: #F9FAFB;
