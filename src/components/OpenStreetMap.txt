@@ -135,23 +135,23 @@ const googleFormLink = "https://forms.gle/goG54XAjUvh2KCc38";
     <div class="text-center max-w-4xl mx-auto mt-12">
         <div class="bg-gradient-to-r from-primary-50 to-emerald-50 dark:from-primary-900/20 dark:to-emerald-900/20 rounded-2xl p-8 md:p-12 border border-primary-100 dark:border-primary-800/30">
             <a
-                    href={googleFormLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group inline-flex items-center justify-center gap-4 bg-gradient-to-r from-primary-500 to-emerald-600 hover:from-primary-600 hover:to-emerald-700 text-white px-12 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-500/30"
+                href={googleFormLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group inline-flex items-center justify-center gap-4 bg-gradient-to-r from-primary-500 to-emerald-600 hover:from-primary-600 hover:to-emerald-700 text-white px-12 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-500/30"
             >
                 <span>¡Solicita recolección ahora!</span>
                 <svg
-                        class="w-6 h-6 group-hover:translate-x-2 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                    class="w-6 h-6 group-hover:translate-x-2 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                 >
                     <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>
             </a>
 
